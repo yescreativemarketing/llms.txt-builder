@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YeS Creative Marketing llms.txt Builder</title>
+  <!-- Typography Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Base Reset & Styling */
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffc007; /* Theme Color Background */
+      color: #000000;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .llmstxt-app {
+      --bg: #FFFFFF;
+      --ink: #000000;
+      --teal: #000000;
+      --teal-dark: #000000;
+      --terracotta: #000000;
+      --sand: #F5F5F5;
+      --sand-line: #E0E0E0;
+      --paper: #FFFFFF;
+      --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      --slab: "Roboto Slab", Georgia, serif;
+      --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      border-radius: 16px;
+      padding: 0;
+      max-width: 1180px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+      border: 3px solid var(--ink);
+      overflow: hidden;
+    }
+    .llmstxt-app * { box-sizing: border-box; }
+
+    .lt-header {
+      padding: 28px 32px 20px;
+      border-bottom: 3px solid var(--ink);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: #000000; /* Solid Black Header */
+      color: #FFFFFF;
+    }
+    .lt-header h1 {
+      font-family: var(--slab);
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      color: #ffc007; /* Highlight Color */
+      letter-spacing: -0.01em;
+    }
+    .lt-header .lt-sub {
+      font-size: 13px;
+      color: #E0E0E0;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .lt-header .lt-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #ffc007;
+      color: #000000;
+      padding: 6px 12px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    /* Preset Selection Bar */
+    .lt-presets-bar {
+      background: #111111; /* Dark Accent Bar */
+      padding: 12px 32px;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .lt-presets-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999999;
+    }
+    .lt-preset-btn {
+      background: #222222;
+      border: 1px solid #444444;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lt-preset-btn:hover {
+      border-color: #ffc007;
+      background: #333333;
+      color: #ffc007;
+      transform: translateY(-1px);
+    }
+
+    .lt-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 0;
+      align-items: start;
+      background: var(--paper);
+    }
+    @media (max-width: 860px) {
+      .lt-body { grid-template-columns: 1fr; }
+    }
+
+    /* LEFT: intake form */
+    .lt-form {
+      padding: 24px 28px 40px;
+      border-right: 2px solid var(--ink);
+    }
+    @media (max-width: 860px) {
+      .lt-form { border-right: none; border-bottom: 2px solid var(--ink); }
+    }
+
+    .lt-section {
+      margin-bottom: 26px;
+    }
+    .lt-section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px dashed var(--sand-line);
+    }
+    .lt-section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #000000;
+      border: 1.5px solid #000000;
+      background: #ffc007; /* Yellow Section Numbers */
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+    .lt-section-title {
+      font-family: var(--slab);
+      font-size: 14.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .lt-field {
+      margin-bottom: 13px;
+    }
+    .lt-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .lt-row2 { grid-template-columns: 1fr; }
+    }
+    .lt-field label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .lt-field .lt-hint {
+      font-size: 11px;
+      color: #666666;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-left: 6px;
+    }
+    .lt-field input[type="text"],
+    .lt-field input[type="url"],
+    .lt-field input[type="tel"],
+    .lt-field textarea {
+      width: 100%;
+      background: var(--paper);
+      border: 2px solid #000000; /* Sharp Black Border */
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      color: var(--ink);
+      transition: all 0.15s ease;
+    }
+    .lt-field input:focus,
+    .lt-field textarea:focus {
+      outline: none;
+      border-color: #000000;
+      box-shadow: 0 0 0 3px rgba(255, 192, 7, 0.4); /* Theme Shadow on Focus */
+    }
+    .lt-field textarea { resize: vertical; min-height: 56px; line-height: 1.45; }
+
+    .lt-hours-grid {
+      display: grid;
+      grid-template-columns: 86px 1fr 18px 1fr auto;
+      gap: 6px 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .lt-hours-grid .lt-day {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .lt-hours-grid input {
+      width: 100%;
+      background: var(--paper);
+      border: 2px solid #000000;
+      border-radius: 5px;
+      padding: 5px 7px;
+      font-size: 12.5px;
+      font-family: var(--sans);
+    }
+    .lt-hours-grid input:focus { outline: none; border-color: #000000; }
+    .lt-hours-dash { text-align: center; color: #666666; font-size: 12px; }
+    .lt-closed-toggle {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: #000000;
+      background: var(--sand);
+      border: 1.5px solid #000000;
+      border-radius: 4px;
+      padding: 5px 7px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      font-weight: 600;
+    }
+    .lt-closed-toggle.is-closed { background: #000000; color: #FFFFFF; }
+
+    /* repeatable lists (services, team) */
+    .lt-list-item {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: flex-start;
+    }
+    .lt-list-item input { flex: 1; }
+    .lt-list-remove {
+      background: none;
+      border: 2px solid #000000;
+      color: #000000;
+      border-radius: 5px;
+      width: 30px;
+      height: 32px;
+      flex-shrink: 0;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      transition: all 0.1s ease;
+    }
+    .lt-list-remove:hover { background: #000000; color: #FFFFFF; }
+
+    .lt-add-btn {
+      background: none;
+      border: 2px dashed #000000;
+      color: #000000;
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 7px 12px;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: all 0.15s ease;
+    }
+    .lt-add-btn:hover { background: rgba(255, 192, 7, 0.15); }
+
+    .lt-checkrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .lt-checkrow input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #ffc007; /* Highlight Accent Checkbox */
+      flex-shrink: 0;
+    }
+
+    /* RIGHT: output / preview */
+    .lt-preview-col {
+      padding: 24px 28px 28px;
+      position: sticky;
+      top: 0;
+    }
+    .lt-folder-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink);
+      color: #ffc007; /* Matching Folder Tab Accent */
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 7px 14px 6px;
+      border-radius: 6px 6px 0 0;
+      margin-left: 14px;
+      position: relative;
+      font-weight: 700;
+    }
+    .lt-doc-frame {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .lt-doc-frame-edge {
+      height: 7px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--paper) 0px, var(--paper) 5px,
+        #000000 5px, #000000 6px
+      );
+      border-bottom: 2px solid var(--ink);
+    }
+    .lt-doc-body {
+      padding: 18px;
+      max-height: 560px;
+      overflow-y: auto;
+    }
+    .lt-doc-body pre {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 12.3px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--ink);
+    }
+    .lt-doc-body .lt-h1 { 
+      color: #000000; 
+      font-weight: 700; 
+      font-size: 14.5px; 
+      display: block; 
+      margin-top: 6px;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 4px;
+    }
+    .lt-doc-body .lt-h2 { 
+      color: #000000; 
+      font-weight: 700; 
+      font-size: 13px; 
+      display: block; 
+      margin-top: 14px; 
+      margin-bottom: 4px; 
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .lt-doc-body .lt-comment { color: #666666; font-style: italic; }
+    .lt-doc-body .lt-placeholder {
+      background: rgba(255, 192, 7, 0.2); /* Matching Highlight */
+      color: #000000;
+      border-radius: 3.5px;
+      padding: 1px 4px;
+      font-weight: 600;
+      border: 1px solid #ffc007;
+    }
+
+    .lt-empty-state {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: #666666;
+      line-height: 1.7;
+    }
+
+    .lt-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .lt-btn {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 7px;
+      padding: 10px 16px;
+      cursor: pointer;
+      border: 2px solid #000000;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+    .lt-btn-primary { background: #000000; color: #FFFFFF; }
+    .lt-btn-primary:hover { background: #333333; }
+    .lt-btn-secondary { background: #FFFFFF; color: #000000; }
+    .lt-btn-secondary:hover { background: #ffc007; } /* Changes to Yellow on hover */
+    .lt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .lt-copy-flash {
+      font-size: 12px;
+      font-weight: 700;
+      color: #000000;
+      align-self: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      background: #ffc007;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1.5px solid #000000;
+    }
+    .lt-copy-flash.show { opacity: 1; }
+
+    .lt-note {
+      font-size: 11.5px;
+      color: #555555;
+      margin-top: 16px;
+      line-height: 1.55;
+      border-top: 1px dashed var(--sand-line);
+      padding-top: 12px;
+    }
+    .lt-note code {
+      background: var(--sand);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-family: var(--mono);
+      border: 1px solid #D0D0D0;
+    }
+
+    .lt-reset-row {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .lt-reset-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #666666;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .lt-reset-btn:hover { color: #000000; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="llmstxt-app" id="ltApp">
+  <!-- HEADER -->
+  <div class="lt-header">
+    <div>
+      <h1>YeS Creative Marketing llms.txt Builder</h1>
+      <div class="lt-sub">Create clean, structured markdown contextual files tailored for AI search agents &amp; assistants</div>
+    </div>
+    <div class="lt-tag">/llms.txt</div>
+  </div>
+
+  <!-- PRESET OPTION BAR -->
+  <div class="lt-presets-bar">
+    <div class="lt-presets-title">Load Practice Presets:</div>
+    <button class="lt-preset-btn" id="presetFamily">Family Dental</button>
+    <button class="lt-preset-btn" id="presetPediatric">Pediatric Care</button>
+    <button class="lt-preset-btn" id="presetCosmetic">Cosmetic &amp; Ortho</button>
+  </div>
+
+  <div class="lt-body">
+    <!-- FORM -->
+    <div class="lt-form">
+
+      <!-- Reset Button Row -->
+      <div class="lt-reset-row">
+        <button class="lt-reset-btn" id="ltResetBtn" type="button">Clear all fields</button>
+      </div>
+
+      <!-- 1. Practice info -->
+      <div class="lt-section">
+        <div class="lt-section-head">
+          <div class="lt-section-num">1</div>
+          <div class="lt-section-title">Practice Info</div>
+        </div>
+
+        <!-- SEOPress Notice Block -->
+        <div class="lt-field" style="background: var(--sand); border-left: 4px solid #ffc007; border-radius: 4px; padding: 10px 12px; margin-bottom: 16px;">
+          <span class="lt-hint" style="margin-left:0; font-size:11.5px; color: #000000; line-height: 1.4; display: block;">
+            <strong>SEOPress Template Mode:</strong> Practice name, slogan, description, and website URL are pulled dynamically from WordPress via SEOPress configuration — no manual input is needed here.
+          </span>
+        </div>
+
+        <div class="lt-row2">
+          <div class="lt-field">
+            <label>Phone</label>
+            <input type="tel" id="f_phone" placeholder="(937) 555-0123">
+          </div>
+          <div class="lt-field">
+            <label>Booking Link <span class="lt-hint">optional</span></label>
+            <input type="url" id="f_booking" placeholder="https://www.example.com/book-now">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Location -->
+      <div class="lt-section">
+        <div class="lt-section-head">
+          <div class="lt-section-num">2</div>
+          <div class="lt-section-title">Location &amp; Hours</div>
+        </div>
+        <div class="lt-field">
+          <label>Street address</label>
+          <input type="text" id="f_address" placeholder="123 Maple St, Troy, OH 45373">
+        </div>
+        <div id="ltHoursGrid"></div>
+      </div>
+
+      <!-- 3. Services -->
+      <div class="lt-section">
+        <div class="lt-section-head">
+          <div class="lt-section-num">3</div>
+          <div class="lt-section-title">Services Offered</div>
+        </div>
+        <div id="ltServicesList"></div>
+        <button class="lt-add-btn" id="ltAddService" type="button">+ Add Service</button>
+      </div>
+
+      <!-- 4. Team -->
+      <div class="lt-section">
+        <div class="lt-section-head">
+          <div class="lt-section-num">4</div>
+          <div class="lt-section-title">Dentists / Team</div>
+        </div>
+        <div id="ltTeamList"></div>
+        <button class="lt-add-btn" id="ltAddTeam" type="button">+ Add Team Member</button>
+      </div>
+
+      <!-- 5. Policies / extra -->
+      <div class="lt-section">
+        <div class="lt-section-head">
+          <div class="lt-section-num">5</div>
+          <div class="lt-section-title">Policies &amp; Notes</div>
+        </div>
+        <div class="lt-checkrow">
+          <input type="checkbox" id="f_newpatients">
+          <label for="f_newpatients">Currently accepting new patients</label>
+        </div>
+        <div class="lt-checkrow">
+          <input type="checkbox" id="f_emergency">
+          <label for="f_emergency">Offers same-day emergency appointments</label>
+        </div>
+        <div class="lt-checkrow">
+          <input type="checkbox" id="f_insurance">
+          <label for="f_insurance">Accepts most dental insurance plans</label>
+        </div>
+        <div class="lt-field" style="margin-top:10px;">
+          <label>Insurance / financing details <span class="lt-hint">optional</span></label>
+          <textarea id="f_insurance_notes" placeholder="e.g. In-network with Delta Dental, MetLife, and Cigna. In-house savings plan available for uninsured patients. CareCredit financing accepted."></textarea>
+        </div>
+        <div class="lt-field">
+          <label>Anything else AI assistants should know <span class="lt-hint">optional</span></label>
+          <textarea id="f_extra" placeholder="e.g. Wheelchair accessible. Spanish-speaking staff available. Free parking on-site."></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="lt-preview-col">
+      <div class="lt-folder-tab">llms.txt</div>
+      <div class="lt-doc-frame">
+        <div class="lt-doc-frame-edge"></div>
+        <div class="lt-doc-body" id="ltDocBody">
+          <div class="lt-empty-state">Start filling out the form on the left &mdash; your llms.txt will build itself here as you type.</div>
+        </div>
+      </div>
+      <div class="lt-actions">
+        <button class="lt-btn lt-btn-primary" id="ltCopyBtn" type="button">Copy Text</button>
+        <button class="lt-btn lt-btn-secondary" id="ltDownloadBtn" type="button">&#8595; Download .txt</button>
+        <span class="lt-copy-flash" id="ltCopyFlash">Copied!</span>
+      </div>
+      <div class="lt-note" id="ltHelpNote">
+        Click <strong>Copy Text</strong>, then in WordPress go to <code>SEOPress &rarr; Pro &rarr; LLMs.txt</code> and paste it into the editor box there. Save, then check the live <code>/llms.txt</code> page to confirm the <code>{{ }}</code> placeholders resolved correctly. Re-run this form any time the practice's details change.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+  // Default initial configuration state
+  const state = {
+    hours: [
+      { day: "Monday", open: "8:00 AM", close: "5:00 PM", closed: false },
+      { day: "Tuesday", open: "8:00 AM", close: "5:00 PM", closed: false },
+      { day: "Wednesday", open: "8:00 AM", close: "5:00 PM", closed: false },
+      { day: "Thursday", open: "8:00 AM", close: "7:00 PM", closed: false },
+      { day: "Friday", open: "8:00 AM", close: "2:00 PM", closed: false },
+      { day: "Saturday", open: "", close: "", closed: true },
+      { day: "Sunday", open: "", close: "", closed: true }
+    ],
+    services: [
+      "Preventive Cleanings & Comprehensive Exams",
+      "Composite Tooth-Colored Fillings",
+      "Advanced Crown and Bridge Work",
+      "Professional In-Office Teeth Whitening",
+      "Root Canal Therapy (Endodontics)"
+    ],
+    team: [
+      { name: "Dr. Jane Montgomery", role: "DDS, Lead General Dentist" },
+      { name: "Dr. Robert Chen", role: "DMD, Associate Dentist" }
+    ]
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function escapeHtml(s) {
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  // Preset Configurations
+  const PRESETS = {
+    family: {
+      phone: "(937) 555-4010",
+      booking: "https://www.maplewoodfamilydental.com/appointment",
+      address: "123 Maple St, Troy, OH 45373",
+      services: [
+        "Routine cleanings & comprehensive checkups",
+        "Porcelain crowns & fixed bridges",
+        "Teeth whitening & cosmetic veneers",
+        "Gentle root canal therapy",
+        "Complete and partial dentures"
+      ],
+      team: [
+        { name: "Dr. Arthur Pendelton", role: "DDS, General Dentist" },
+        { name: "Dr. Sarah Lindemann", role: "DMD, Family Practice Practitioner" }
+      ],
+      hours: [
+        { day: "Monday", open: "8:00 AM", close: "5:00 PM", closed: false },
+        { day: "Tuesday", open: "8:00 AM", close: "5:00 PM", closed: false },
+        { day: "Wednesday", open: "8:00 AM", close: "5:00 PM", closed: false },
+        { day: "Thursday", open: "9:00 AM", close: "6:00 PM", closed: false },
+        { day: "Friday", open: "8:00 AM", close: "1:00 PM", closed: false },
+        { day: "Saturday", open: "", close: "", closed: true },
+        { day: "Sunday", open: "", close: "", closed: true }
+      ],
+      newPatients: true,
+      emergency: true,
+      insurance: true,
+      insuranceNotes: "In-network with Delta Dental, Cigna, MetLife, and Aetna. We also accept CareCredit financing.",
+      extra: "Free dedicated patient parking lot on site. Wheelchair accessible."
+    },
+    pediatric: {
+      phone: "(937) 555-5437",
+      booking: "https://www.littlesmileskids.com/schedule",
+      address: "405 Executive Parkway, Suite 100, Troy, OH 45373",
+      services: [
+        "First-visit dental checkups & cleanings",
+        "Protective dental sealants & fluoride treatment",
+        "Pediatric white fillings & crowns",
+        "Space maintainers & interceptive ortho",
+        "Safe pediatric sedation dentistry options"
+      ],
+      team: [
+        { name: "Dr. Timothy Vance", role: "DDS, Board-Certified Pediatric Dentist" },
+        { name: "Miss Becky Miller", role: "Lead Pediatric Hygienist" }
+      ],
+      hours: [
+        { day: "Monday", open: "7:30 AM", close: "4:00 PM", closed: false },
+        { day: "Tuesday", open: "7:30 AM", close: "4:00 PM", closed: false },
+        { day: "Wednesday", open: "7:30 AM", close: "4:00 PM", closed: false },
+        { day: "Thursday", open: "7:30 AM", close: "4:00 PM", closed: false },
+        { day: "Friday", open: "7:30 AM", close: "12:00 PM", closed: false },
+        { day: "Saturday", open: "", close: "", closed: true },
+        { day: "Sunday", open: "", close: "", closed: true }
+      ],
+      newPatients: true,
+      emergency: true,
+      insurance: true,
+      insuranceNotes: "Proudly accept standard plans and state pediatric Medicaid programs.",
+      extra: "Features a child-friendly lobby with video games and prize box tokens."
+    },
+    cosmetic: {
+      phone: "(937) 555-9000",
+      booking: "https://www.apexsmiledesign.com/free-consult",
+      address: "88 Market St Suite B, Troy, OH 45373",
+      services: [
+        "Invisalign Clear Aligner Treatment",
+        "Traditional metal & premium ceramic braces",
+        "Porcelain Veneers & Smile Makeovers",
+        "Dental implant restorations",
+        "In-office Zoom! Whitening sessions"
+      ],
+      team: [
+        { name: "Dr. Nicholas Vance", role: "DDS, MS, Orthodontist" },
+        { name: "Dr. Evelyn Ross", role: "DDS, Cosmetic Specialist" }
+      ],
+      hours: [
+        { day: "Monday", open: "9:00 AM", close: "6:00 PM", closed: false },
+        { day: "Tuesday", open: "9:00 AM", close: "6:00 PM", closed: false },
+        { day: "Wednesday", open: "10:00 AM", close: "7:00 PM", closed: false },
+        { day: "Thursday", open: "9:00 AM", close: "6:00 PM", closed: false },
+        { day: "Friday", open: "", close: "", closed: true },
+        { day: "Saturday", open: "9:00 AM", close: "1:00 PM", closed: false },
+        { day: "Sunday", open: "", close: "", closed: true }
+      ],
+      newPatients: true,
+      emergency: false,
+      insurance: true,
+      insuranceNotes: "No-interest in-house financing programs and structured monthly payment structures.",
+      extra: "Providing complimentary 3D iTero dental scan evaluations for new orthodontic patients."
+    }
+  };
+
+  function loadPreset(key) {
+    const data = PRESETS[key];
+    if (!data) return;
+
+    $("f_phone").value = data.phone;
+    $("f_booking").value = data.booking;
+    $("f_address").value = data.address;
+    
+    state.hours = JSON.parse(JSON.stringify(data.hours));
+    state.services = [...data.services];
+    state.team = JSON.parse(JSON.stringify(data.team));
+
+    $("f_newpatients").checked = data.newPatients;
+    $("f_emergency").checked = data.emergency;
+    $("f_insurance").checked = data.insurance;
+    $("f_insurance_notes").value = data.insuranceNotes;
+    $("f_extra").value = data.extra;
+
+    buildHoursGrid();
+    buildServicesList();
+    buildTeamList();
+    render();
+  }
+
+  function buildHoursGrid() {
+    const grid = $("ltHoursGrid");
+    grid.innerHTML = "";
+    const wrapper = document.createElement("div");
+    wrapper.className = "lt-hours-grid";
+    state.hours.forEach((row, i) => {
+      const dayLabel = document.createElement("div");
+      dayLabel.className = "lt-day";
+      dayLabel.textContent = row.day.slice(0,3);
+
+      const openInput = document.createElement("input");
+      openInput.type = "text";
+      openInput.placeholder = "9:00 AM";
+      openInput.value = row.open;
+      openInput.disabled = row.closed;
+      openInput.addEventListener("input", e => { state.hours[i].open = e.target.value; render(); });
+
+      const dash = document.createElement("div");
+      dash.className = "lt-hours-dash";
+      dash.textContent = "–";
+
+      const closeInput = document.createElement("input");
+      closeInput.type = "text";
+      closeInput.placeholder = "5:00 PM";
+      closeInput.value = row.close;
+      closeInput.disabled = row.closed;
+      closeInput.addEventListener("input", e => { state.hours[i].close = e.target.value; render(); });
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "lt-closed-toggle" + (row.closed ? " is-closed" : "");
+      toggle.textContent = row.closed ? "Closed" : "Open";
+      toggle.addEventListener("click", () => {
+        state.hours[i].closed = !state.hours[i].closed;
+        buildHoursGrid();
+        render();
+      });
+
+      grid.appendChild(wrapper); // ensure wrapper in DOM once
+      wrapper.appendChild(dayLabel);
+      wrapper.appendChild(openInput);
+      wrapper.appendChild(dash);
+      wrapper.appendChild(closeInput);
+      wrapper.appendChild(toggle);
+    });
+  }
+
+  function buildServicesList() {
+    const list = $("ltServicesList");
+    list.innerHTML = "";
+    state.services.forEach((val, i) => {
+      const row = document.createElement("div");
+      row.className = "lt-list-item";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "e.g. Root canals";
+      input.value = val;
+      input.addEventListener("input", e => { state.services[i] = e.target.value; render(); });
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "lt-list-remove";
+      removeBtn.innerHTML = "&times;";
+      removeBtn.addEventListener("click", () => {
+        state.services.splice(i, 1);
+        buildServicesList();
+        render();
+      });
+
+      row.appendChild(input);
+      row.appendChild(removeBtn);
+      list.appendChild(row);
+    });
+  }
+
+  function buildTeamList() {
+    const list = $("ltTeamList");
+    list.innerHTML = "";
+    state.team.forEach((member, i) => {
+      const row = document.createElement("div");
+      row.className = "lt-list-item";
+
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.placeholder = "Dr. Jane Smith";
+      nameInput.value = member.name;
+      nameInput.style.flex = "1.3";
+      nameInput.addEventListener("input", e => { state.team[i].name = e.target.value; render(); });
+
+      const roleInput = document.createElement("input");
+      roleInput.type = "text";
+      roleInput.placeholder = "DDS, General Dentist";
+      roleInput.value = member.role;
+      roleInput.addEventListener("input", e => { state.team[i].role = e.target.value; render(); });
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "lt-list-remove";
+      removeBtn.innerHTML = "&times;";
+      removeBtn.addEventListener("click", () => {
+        state.team.splice(i, 1);
+        buildTeamList();
+        render();
+      });
+
+      row.appendChild(nameInput);
+      row.appendChild(roleInput);
+      row.appendChild(removeBtn);
+      list.appendChild(row);
+    });
+  }
+
+  function generateText() {
+    const address = $("f_address").value.trim();
+    const phone = $("f_phone").value.trim();
+    const booking = $("f_booking").value.trim();
+    const newPatients = $("f_newpatients").checked;
+    const emergency = $("f_emergency").checked;
+    const insurance = $("f_insurance").checked;
+    const insuranceNotes = $("f_insurance_notes").value.trim();
+    const extra = $("f_extra").value.trim();
+
+    // Pure dynamic template outputs
+    const nameStr = "{{site_name}}";
+    const descStr = "{{site_description}}";
+    const urlStr = "{{site_url}}";
+    const dateStr = "{{current_date}}";
+
+    const lines = [];
+
+    lines.push(`# ${nameStr}`);
+    lines.push("");
+    lines.push(`> ${descStr}`);
+    lines.push(`> Last updated: ${dateStr}`);
+
+    lines.push("");
+    lines.push("## Practice Information");
+    lines.push(`- Address: ${address || "[Street Address]"}`);
+    lines.push(`- Phone: ${phone || "[Phone Number]"}`);
+    lines.push(`- Website: ${urlStr}`);
+    if (booking) {
+      lines.push(`- Book an appointment: ${booking}`);
+    }
+
+    const hoursLines = state.hours
+      .filter(h => h.closed || h.open || h.close)
+      .map(h => h.closed ? `- ${h.day}: Closed` : `- ${h.day}: ${h.open || "?"} - ${h.close || "?"}`);
+    if (hoursLines.length) {
+      lines.push("");
+      lines.push("## Hours");
+      lines.push(...hoursLines);
+    }
+
+    const servicesClean = state.services.map(s => s.trim()).filter(Boolean);
+    if (servicesClean.length) {
+      lines.push("");
+      lines.push("## Services");
+      servicesClean.forEach(s => lines.push(`- ${s}`));
+    }
+
+    const teamClean = state.team.filter(t => t.name.trim());
+    if (teamClean.length) {
+      lines.push("");
+      lines.push("## Team");
+      teamClean.forEach(t => {
+        lines.push(`- ${t.name.trim()}${t.role.trim() ? ", " + t.role.trim() : ""}`);
+      });
+    }
+
+    const policyLines = [];
+    if (newPatients) policyLines.push("- Currently accepting new patients.");
+    if (emergency) policyLines.push("- Offers same-day emergency appointments.");
+    if (insurance) policyLines.push("- Accepts most major dental insurance plans.");
+    if (insuranceNotes) policyLines.push(`- ${insuranceNotes}`);
+    if (policyLines.length) {
+      lines.push("");
+      lines.push("## Policies");
+      lines.push(...policyLines);
+    }
+
+    if (extra) {
+      lines.push("");
+      lines.push("## Additional Notes");
+      lines.push(extra);
+    }
+
+    lines.push("");
+    lines.push("## Search");
+    lines.push("");
+    lines.push("- Search URL: `{{search_url}}`");
+    
+    lines.push("");
+    lines.push("## Recent Content");
+    lines.push("");
+    lines.push("{{latest_posts:5}}");
+    lines.push("");
+    lines.push("## Complete Sitemap");
+    lines.push("");
+    lines.push("For a comprehensive list of all URLs, see: {{sitemap_url}}");
+    lines.push("");
+    lines.push("---");
+    lines.push("");
+    lines.push("*This file is dynamically generated and highlights our most important practice information alongside recently published content.*");
+
+    return lines.join("\n").trim();
+  }
+
+  function highlightForDisplay(text) {
+    return text.split("\n").map(line => {
+      let esc = escapeHtml(line);
+      esc = esc.replace(/(\{\{[^}]+\}\})/g, '<span class="lt-placeholder">$1</span>');
+      if (/^# /.test(line)) return `<span class="lt-h1">${esc}</span>`;
+      if (/^## /.test(line)) return `<span class="lt-h2">${esc}</span>`;
+      if (/^&gt; /.test(esc) || /^> /.test(line)) return `<span class="lt-comment">${esc}</span>`;
+      return esc;
+    }).join("\n");
+  }
+
+  function render() {
+    const text = generateText();
+    const docBody = $("ltDocBody");
+
+    docBody.innerHTML = `<pre>${highlightForDisplay(text)}</pre>`;
+    $("ltDownloadBtn").disabled = false;
+    $("ltCopyBtn").disabled = false;
+  }
+
+  function downloadFile() {
+    const text = generateText();
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "llms.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function copyText() {
+    const text = generateText();
+    
+    // Primary approach using hidden textarea to guarantee working state inside sandboxed iframes
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";  // Avoid scrolling to bottom of page
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    let copySuccess = false;
+    try {
+      copySuccess = document.execCommand("copy");
+    } catch (e) {
+      console.warn("execCommand copy failed, attempting navigator clipboard...", e);
+    }
+    
+    document.body.removeChild(textarea);
+
+    if (!copySuccess && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        showCopyToast();
+      }).catch(err => {
+        console.error("Failed to copy using fallback method", err);
+      });
+    } else {
+      showCopyToast();
+    }
+  }
+
+  function showCopyToast() {
+    const flash = $("ltCopyFlash");
+    flash.classList.add("show");
+    setTimeout(() => flash.classList.remove("show"), 1400);
+  }
+
+  function resetAll() {
+    ["f_phone","f_booking","f_address","f_insurance_notes","f_extra"].forEach(id => {
+      const el = $(id);
+      if(el) el.value = "";
+    });
+    ["f_newpatients","f_emergency","f_insurance"].forEach(id => {
+      const el = $(id);
+      if(el) el.checked = false;
+    });
+    state.hours = DAYS.map(d => ({ day: d, open: "", close: "", closed: false }));
+    state.services = [];
+    state.team = [{ name: "", role: "" }];
+    buildHoursGrid();
+    buildServicesList();
+    buildTeamList();
+    render();
+  }
+
+  // wire up text inputs
+  ["f_phone","f_booking","f_address","f_insurance_notes","f_extra"].forEach(id => {
+    $(id).addEventListener("input", render);
+  });
+  ["f_newpatients","f_emergency","f_insurance"].forEach(id => {
+    $(id).addEventListener("change", render);
+  });
+
+  $("ltAddService").addEventListener("click", () => {
+    state.services.push("");
+    buildServicesList();
+    render();
+  });
+  $("ltAddTeam").addEventListener("click", () => {
+    state.team.push({ name: "", role: "" });
+    buildTeamList();
+    render();
+  });
+
+  $("ltDownloadBtn").addEventListener("click", downloadFile);
+  $("ltCopyBtn").addEventListener("click", copyText);
+  $("ltResetBtn").addEventListener("click", resetAll);
+
+  // Presets
+  $("presetFamily").addEventListener("click", () => loadPreset("family"));
+  $("presetPediatric").addEventListener("click", () => loadPreset("pediatric"));
+  $("presetCosmetic").addEventListener("click", () => loadPreset("cosmetic"));
+
+  // Initialize
+  buildHoursGrid();
+  buildServicesList();
+  buildTeamList();
+  render();
+})();
+</script>
+</body>
+</html>
